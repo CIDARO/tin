@@ -35,7 +35,7 @@ impl<'r> Responder<'r> for ApiResponse {
 pub fn get(key: String, store: State<TinStore>) -> ApiResponse {
     if let Some(value) = store.get(key) {
         ApiResponse {
-            result: json!({"result": value.data}),
+            result: json!({"result": value}),
             status: Status::Ok,
         }
     } else {

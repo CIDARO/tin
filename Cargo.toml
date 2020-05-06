@@ -14,7 +14,7 @@ app_dirs = "1.2.1"
 block-modes = "0.3.3"
 bytes = "0.5.3"
 chashmap = "2.2.2"
-chrono = "0.4.10"
+chrono = { version = "0.4.10", features = ["serde"] }
 clokwerk = "0.3.0"
 hex = "0.3.1"
 rand = "0.7.3"

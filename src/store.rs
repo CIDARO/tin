@@ -2,10 +2,9 @@ use chashmap::CHashMap;
 use chrono::{DateTime, Utc, Duration};
 
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct TinElement {
     pub data: String,
-    pub mimetype: String,
     pub creation: DateTime<Utc>,
     pub update: DateTime<Utc>,
     pub expiration: Option<DateTime<Utc>>,
@@ -30,18 +29,15 @@ impl TinStore {
         match &mut self.map.get_mut(&key) {
             Some(tin_element) => {
                 if !tin_element.locked {
-                    let mimetype = tree_magic::from_u8(value.as_ref());
                     tin_element.data = value;
-                    tin_element.mimetype = mimetype;
+                    tin_element.update = Utc::now();
                 }
-                tin_element.update = Utc::now();
                 return Some(tin_element.to_owned())
             }
             None => {
-                let mimetype = tree_magic::from_u8(value.as_ref());
+                let mimetype = "application/json".to_string();
                 let tin_element = TinElement {
                     data: value,
-                    mimetype,
                     creation: Utc::now(),
                     update: Utc::now(),
                     expiration: None,
@@ -56,18 +52,14 @@ impl TinStore {
         match &mut self.map.get_mut(&key) {
             Some(tin_element) => {
                 if !tin_element.locked {
-                    let mimetype = tree_magic::from_u8(value.as_ref());
                     tin_element.data = value;
-                    tin_element.mimetype = mimetype;
+                    tin_element.update = Utc::now();
                 }
-                tin_element.update = Utc::now();
                 return Some(tin_element.to_owned())
             }
             None => {
-                let mimetype = tree_magic::from_u8(value.as_ref());
                 let tin_element = TinElement {
                     data: value,
-                    mimetype,
                     creation: Utc::now(),
                     update: Utc::now(),
                     expiration: Some(Utc::now() + Duration::seconds(seconds)),
