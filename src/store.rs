@@ -35,7 +35,6 @@ impl TinStore {
                 return Some(tin_element.to_owned())
             }
             None => {
-                let mimetype = "application/json".to_string();
                 let tin_element = TinElement {
                     data: value,
                     creation: Utc::now(),
