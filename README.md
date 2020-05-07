@@ -21,13 +21,13 @@
 
 ---
 
-### Status
+## Status
 
-**Tin** is currently in **alpha** version. It has never been released in production and currently it's only an idea that I'm developing. Please, please, please, **do not** use this in production!
+**Tin** is currently in **alpha** version. It has never been released and currently it's only an idea that we're developing. Please, please, please, **do not** use this in production!
 
 ---
 
-### Contributing
+## Contributing
 
 We welcome community contributions!
 
