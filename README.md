@@ -27,6 +27,33 @@
 
 ---
 
+## Description
+
+**Tin** is a lightweight Open Source Key/Value storage atom developed in **Rust**.
+
+It exposes a simple HTTP API made with **Rocket** where all the actions are sent to. These are the currently available ones:
+- `/get/<key>` to retrieve the value associated with the input key;
+- `/set/<key>` with the following body `{"value": VALUE, "expiration": 0}` to set the VALUE for the given key;
+- `/setexp/<key>` with the following body `{"value": VALUE, "expiration": EXPIRATION}` to set the VALUE and EXPIRATION of the given key;
+- `/delete/<key>` to remove the value associated with the input key;
+- `/check` to check for expiring key/value pairs (**caution**: this may be removed in the future).
+
+---
+
+### TODO List
+
+- [x] Minimal key/value pair operations
+- [x] HTTP API using Rocket (currently considering Actix or Warp too)
+- [ ] CLI configuration
+- [ ] Persistence
+- [ ] Replication
+- [ ] Encryption
+- [ ] Dockerfile
+- [ ] Compression (?)
+- [ ] Queues implementation (Redis wannabe?)
+
+---
+
 ## Contributing
 
 We welcome community contributions!
