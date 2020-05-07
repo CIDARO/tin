@@ -1,5 +1,7 @@
 use chashmap::CHashMap;
 use chrono::{DateTime, Utc, Duration};
+use short_crypt::ShortCrypt;
+use std::str;
 
 
 #[derive(Debug, Clone, Serialize)]
@@ -14,12 +16,14 @@ pub struct TinElement {
 #[derive(Debug, Clone)]
 pub struct TinStore {
     map: CHashMap<String, TinElement>,
+    key: String
 }
 
 impl TinStore {
-    pub fn new() -> TinStore {
+    pub fn new(key: String) -> TinStore {
         let store = TinStore {
             map: CHashMap::new(),
+            key,
         };
 
         return store;
@@ -29,7 +33,12 @@ impl TinStore {
         match &mut self.map.get_mut(&key) {
             Some(tin_element) => {
                 if !tin_element.locked {
-                    tin_element.data = value;
+                    if self.key != "" {
+                        let sc = ShortCrypt::new(self.key.clone());
+                        tin_element.data = sc.encrypt_to_url_component(value.clone().as_str());
+                    } else {
+                        tin_element.data = value;
+                    }
                     tin_element.update = Utc::now();
                 }
                 return Some(tin_element.to_owned())
@@ -51,7 +60,12 @@ impl TinStore {
         match &mut self.map.get_mut(&key) {
             Some(tin_element) => {
                 if !tin_element.locked {
-                    tin_element.data = value;
+                    if self.key != "" {
+                        let sc = ShortCrypt::new(self.key.clone());
+                        tin_element.data = sc.encrypt_to_url_component(value.clone().as_str());
+                    } else {
+                        tin_element.data = value;
+                    }
                     tin_element.update = Utc::now();
                 }
                 return Some(tin_element.to_owned())
@@ -72,7 +86,11 @@ impl TinStore {
     pub fn get(&self, key: String) -> Option<TinElement> {
         match &mut self.map.get_mut(&key) {
             Some(tin_element) => {
-                let cloned = tin_element.clone();
+                let mut cloned = tin_element.clone();
+                if self.key != "" {
+                    let sc = ShortCrypt::new(self.key.clone());
+                    cloned.data = str::from_utf8(&sc.decrypt_url_component(cloned.clone().data).unwrap()).unwrap().to_string();
+                }
                 return Some(cloned);
             }
             None => None,
