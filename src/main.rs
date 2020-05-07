@@ -9,25 +9,13 @@ mod store;
 mod routes;
 
 use crate::store::TinStore;
-use clokwerk::{Scheduler, TimeUnits};
-use clokwerk::Interval::*;
-use std::time::Duration;
-
-fn check_expired() {
-    let _res = reqwest::get("http://localhost:8000/check");
-}
 
 fn main() {
 
     let store = TinStore::new();
-    
-    let mut scheduler = Scheduler::new();
-    scheduler.every(5.seconds()).run(|| check_expired());
-
-    let _thread_handle = scheduler.watch_thread(Duration::from_millis(100));
 
     rocket::ignite()
         .manage(store)
-        .mount("/", routes![routes::get, routes::set, routes::set_exp, routes::delete, routes::check])
+        .mount("/", routes![routes::get, routes::set, routes::set_exp, routes::delete])
         .launch();
 }

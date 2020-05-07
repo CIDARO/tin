@@ -91,12 +91,3 @@ pub fn delete(key: String, store: State<TinStore>) -> ApiResponse {
         }
     }
 }
-
-#[get("/check")]
-pub fn check(store: State<TinStore>) -> ApiResponse {
-    store.check_expired();
-    ApiResponse {
-        result: json!({"result": "Done."}),
-        status: Status::Ok,
-    }
-}

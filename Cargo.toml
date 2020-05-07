@@ -15,7 +15,6 @@ block-modes = "0.3.3"
 bytes = "0.5.3"
 chashmap = "2.2.2"
 chrono = { version = "0.4.10", features = ["serde"] }
-clokwerk = "0.3.0"
 hex = "0.3.1"
 rand = "0.7.3"
 reqwest = "0.10.4"
@@ -25,5 +24,3 @@ serde = "1.0.104"
 serde_json = "1.0.44"
 serde_derive = "1.0.104"
 serde_yaml = "0.8.11"
-serpent = { git = "https://github.com/RustCrypto/block-ciphers" }
-tree_magic = "0.2.1"

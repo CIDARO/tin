@@ -35,8 +35,7 @@ It exposes a simple HTTP API made with **Rocket** where all the actions are sent
 - `/get/<key>` to retrieve the value associated with the input key;
 - `/set/<key>` with the following body `{"value": VALUE, "expiration": 0}` to set the VALUE for the given key;
 - `/setexp/<key>` with the following body `{"value": VALUE, "expiration": EXPIRATION}` to set the VALUE and EXPIRATION of the given key;
-- `/delete/<key>` to remove the value associated with the input key;
-- `/check` to check for expiring key/value pairs (**caution**: this may be removed in the future).
+- `/delete/<key>` to remove the value associated with the input key.
 
 ---
 
