@@ -2,13 +2,9 @@ name: tin
 version: "0.1.0-alpha"
 author: CIDARO srl <support@cidaro.com>
 about: Tin is an pen Source Key/Value storage atom.
-subcommands:
-  - start:
-      about: "Starts Tin instance"
-      author: *author
-      args:
-        - key:
-            help: "Encryption/decryption key"
-            short: "k"
-            long: "key"
-            takes_value: true
+args:
+  - key:
+      help: "Encryption/decryption key"
+      short: "k"
+      long: "key"
+      takes_value: true
