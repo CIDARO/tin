@@ -40,7 +40,7 @@ It exposes a simple HTTP API made with **Rocket** where all the actions are sent
 
 ---
 
-### TODO List
+## TODO List
 
 - [x] Minimal key/value pair operations
 - [x] HTTP API using Rocket (currently considering Actix or Warp too)
