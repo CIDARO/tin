@@ -5,11 +5,13 @@
 extern crate short_crypt;
 extern crate serde_json;
 
+mod queue;
 mod store;
 mod routes;
 
 use clap::{App, load_yaml};
 use crate::store::TinStore;
+use crate::queue::Queue;
 
 fn main() {
 
