@@ -1,6 +1,7 @@
 use std::iter::{Chain};
 use std::slice::{Iter as SliceIter, IterMut as SliceIterMut};
 
+#[derive(Clone)]
 pub struct TinQueue<T> {
     vec: Vec<T>,
     capacity: usize,

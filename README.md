@@ -32,10 +32,15 @@
 **Tin** is a lightweight Open Source Key/Value storage atom developed in **Rust**.
 
 It exposes a simple HTTP API made with **Rocket** where all the actions are sent to. These are the currently available ones:
-- `/get/<key>` to retrieve the value associated with the input key;
-- `/set/<key>` with the following body `{"value": VALUE, "expiration": 0}` to set the VALUE for the given key;
-- `/setexp/<key>` with the following body `{"value": VALUE, "expiration": EXPIRATION}` to set the VALUE and EXPIRATION of the given key;
-- `/delete/<key>` to remove the value associated with the input key.
+- `GET /store/get/<key>` to retrieve the value associated with the input key;
+- `POST /store/set/<key>` with the following body `{"value": VALUE, "expiration": 0}` to set the VALUE for the given key;
+- `POST /store/setexp/<key>` with the following body `{"value": VALUE, "expiration": EXPIRATION}` to set the VALUE and EXPIRATION of the given key;
+- `DELETE /store/delete/<key>` to remove the value associated with the input key;
+- `GET /queues/<queue_name>` to retrieve information about the queue with the input name;
+- `DELETE /queues/<queue_name>` to delete the queue with the input name;
+- `POST /queues/<queue_name>/create` to create a new queue with the input name;
+- `POST /queues/<queue_name>/push` with the following body `{"value": "VALUE"}` to push the VALUE into the queue;
+- `POST /queues/<queue_name>/clear` to clear all the content inside the queue with the given name.
 
 ---
 
@@ -46,10 +51,10 @@ It exposes a simple HTTP API made with **Rocket** where all the actions are sent
 - [x] CLI configuration (WIP)
 - [x] Encryption (WIP)
 - [x] Dockerfile (WIP)
+- [x] Queues implementation (Redis wannabe? - WIP)
 - [ ] Persistence
 - [ ] Replication
 - [ ] Compression (?)
-- [ ] Queues implementation (Redis wannabe?)
 
 ---
 

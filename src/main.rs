@@ -5,13 +5,14 @@
 extern crate short_crypt;
 extern crate serde_json;
 
+mod manager;
 mod queue;
 mod store;
 mod routes;
 
 use clap::{App, load_yaml};
 use crate::store::TinStore;
-use crate::queue::TinQueue;
+use crate::manager::TinQueueManager;
 
 fn main() {
 
@@ -21,9 +22,11 @@ fn main() {
     let secret_key = app_matches.value_of("key").unwrap_or("");
 
     let store = TinStore::new(secret_key.to_string());
+    let queue_manager = TinQueueManager::new();
 
     rocket::ignite()
         .manage(store)
-        .mount("/", routes![routes::home, routes::get, routes::set, routes::set_exp, routes::delete])
+        .manage(queue_manager)
+        .mount("/", routes![routes::home, routes::get, routes::set, routes::set_exp, routes::delete, routes::get_queue, routes::create_queue, routes::push_to_queue])
         .launch();
 }

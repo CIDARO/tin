@@ -20,13 +20,11 @@ pub struct TinStore {
 }
 
 impl TinStore {
-    pub fn new(key: String) -> TinStore {
-        let store = TinStore {
+    pub fn new(key: String) -> Self {
+        Self {
             map: CHashMap::new(),
             key,
-        };
-
-        return store;
+        }
     }
 
     pub fn set(&self, key: String, value: String) -> Option<TinElement> {
