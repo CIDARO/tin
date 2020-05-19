@@ -1,4 +1,5 @@
 extern crate serde_json;
+extern crate clap;
 
 use rocket::State;
 use rocket::response::{Responder, Response};
@@ -27,6 +28,14 @@ impl<'r> Responder<'r> for ApiResponse {
             .status(self.status)
             .header(ContentType::JSON)
             .ok()
+    }
+}
+
+#[get("/", format = "application/json")]
+pub fn home() -> ApiResponse {
+    ApiResponse {
+        result: json!({"result": clap::crate_version!()}),
+        status: Status::Ok,
     }
 }
 

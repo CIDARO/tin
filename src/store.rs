@@ -123,7 +123,7 @@ impl TinStore {
         }
     }
 
-    pub fn check_expired(&self) {
+    pub async fn check_expired(&self) {
         self.map.retain(|k, v| {
             self.lock(k.clone());
             match v.expiration {
