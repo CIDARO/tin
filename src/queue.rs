@@ -4,7 +4,7 @@ use std::slice::{Iter as SliceIter, IterMut as SliceIterMut};
 pub struct Queue<T> {
     vec: Vec<T>,
     capacity: usize,
-    index: usize
+    index: usize,
 }
 
 pub type Iter<'a, T> = Chain<SliceIter<'a, T>, SliceIter<'a, T>>;
@@ -16,7 +16,7 @@ impl<T> Queue<T> {
         Self {
             vec: Vec::with_capacity(size),
             capacity: size,
-            index: 0
+            index: 0,
         }
     }
 
@@ -47,11 +47,14 @@ impl<T> Queue<T> {
         if self.capacity == 0 {
             return;
         }
+        // If the length is lesser than the capacity, push the element
         if self.vec.len() < self.capacity {
             self.vec.push(element);
+        // Else override an existing element
         } else {
             self.vec[self.index] = element;
         }
+        // Update the index
         self.index = (self.index + 1) % self.get_capacity();
     }
 
