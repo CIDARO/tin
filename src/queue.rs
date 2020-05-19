@@ -1,16 +1,16 @@
 use std::iter::{Chain};
 use std::slice::{Iter as SliceIter, IterMut as SliceIterMut};
 
-pub struct Queue<T> {
+pub struct TinQueue<T> {
     vec: Vec<T>,
     capacity: usize,
     index: usize,
 }
 
-pub type Iter<'a, T> = Chain<SliceIter<'a, T>, SliceIter<'a, T>>;
-pub type IterMut<'a, T> = Chain<SliceIterMut<'a, T>, SliceIterMut<'a, T>>;
+pub type TinIter<'a, T> = Chain<SliceIter<'a, T>, SliceIter<'a, T>>;
+pub type TinIterMut<'a, T> = Chain<SliceIterMut<'a, T>, SliceIterMut<'a, T>>;
 
-impl<T> Queue<T> {
+impl<T> TinQueue<T> {
     // Creates new Queue
     pub fn new(size: usize) -> Self {
         Self {
@@ -59,13 +59,13 @@ impl<T> Queue<T> {
     }
 
     // Iter through the queue content and return the iterator
-    pub fn iter(&self) -> Iter<T> {
+    pub fn iter(&self) -> TinIter<T> {
         let (a, b) = self.vec.split_at(self.index);
         b.iter().chain(a.iter())
     }
 
     // Iter through the queue content and return the mutable iterator
-    pub fn iter_mut(&mut self) -> IterMut<T> {
+    pub fn iter_mut(&mut self) -> TinIterMut<T> {
         let (a, b) = self.vec.split_at_mut(self.index);
         b.iter_mut().chain(a.iter_mut())
     }

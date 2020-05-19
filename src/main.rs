@@ -11,7 +11,7 @@ mod routes;
 
 use clap::{App, load_yaml};
 use crate::store::TinStore;
-use crate::queue::Queue;
+use crate::queue::TinQueue;
 
 fn main() {
 
