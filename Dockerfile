@@ -6,4 +6,4 @@ RUN cargo build --release
 RUN cp target/release/tin /usr/bin/
 
 EXPOSE 80
-CMD ["tin", "--key", "secret_key"]
+CMD tin --key $SECRET_KEY
