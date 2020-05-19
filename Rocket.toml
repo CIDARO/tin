@@ -1,17 +1,23 @@
 [development]
 address = "localhost"
-port = 8080
+port = 8000
+keep_alive = 5
 log = "normal"
+secret_key = "Cd6iTA4gw1whmwN4HMBEP6J9I6i1UraE7e0tY8QyOjk="
 limits = { forms = 32768 }
 
 [staging]
 address = "0.0.0.0"
-port = 80
+port = 8000
+keep_alive = 5
 log = "normal"
+secret_key = "Cd6iTA4gw1whmwN4HMBEP6J9I6i1UraE7e0tY8QyOjk="
 limits = { forms = 32768 }
 
 [production]
 address = "0.0.0.0"
 port = 80
+keep_alive = 5
 log = "critical"
+secret_key = "Cd6iTA4gw1whmwN4HMBEP6J9I6i1UraE7e0tY8QyOjk="
 limits = { forms = 32768 }

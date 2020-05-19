@@ -3,7 +3,6 @@
 #[macro_use] extern crate rocket_contrib;
 #[macro_use] extern crate serde_derive;
 extern crate short_crypt;
-extern crate reqwest;
 extern crate serde_json;
 
 mod store;
@@ -23,6 +22,6 @@ fn main() {
 
     rocket::ignite()
         .manage(store)
-        .mount("/", routes![routes::get, routes::set, routes::set_exp, routes::delete])
+        .mount("/", routes![routes::home, routes::get, routes::set, routes::set_exp, routes::delete])
         .launch();
 }
