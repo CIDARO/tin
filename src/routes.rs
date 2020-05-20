@@ -156,7 +156,7 @@ pub fn create_queue(queue_name: String, queue_manager: State<TinQueueManager>) -
 #[post("/queues/<queue_name>/push", format = "application/json", data = "<body>")]
 pub fn push_to_queue(queue_name: String, body: Json<QueueElement>, queue_manager: State<TinQueueManager>) -> ApiResponse {
     if let Some(queue) = queue_manager.get_queue(queue_name.clone()) {
-        let mut updated_queue = queue.clone();
+        let mut updated_queue = queue;
         updated_queue.push(body.value.clone());
         queue_manager.update_queue(queue_name.clone(), updated_queue);
         ApiResponse {
@@ -174,7 +174,7 @@ pub fn push_to_queue(queue_name: String, body: Json<QueueElement>, queue_manager
 #[post("/queues/<queue_name>/clear")]
 pub fn clear_queue(queue_name: String, queue_manager: State<TinQueueManager>) -> ApiResponse {
     if let Some(queue) = queue_manager.get_queue(queue_name.clone()) {
-        let mut cloned_queue = queue.clone();
+        let mut cloned_queue = queue;
         cloned_queue.clear_queue();
         queue_manager.update_queue(queue_name, cloned_queue);
         ApiResponse {

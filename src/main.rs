@@ -27,6 +27,15 @@ fn main() {
     rocket::ignite()
         .manage(store)
         .manage(queue_manager)
-        .mount("/", routes![routes::home, routes::get, routes::set, routes::set_exp, routes::delete, routes::get_queue, routes::create_queue, routes::push_to_queue])
+        .mount("/", routes![routes::home, 
+                            routes::get, 
+                            routes::set, 
+                            routes::set_exp, 
+                            routes::delete, 
+                            routes::get_queue, 
+                            routes::create_queue, 
+                            routes::delete_queue,
+                            routes::push_to_queue,
+                            routes::clear_queue])
         .launch();
 }
