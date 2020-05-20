@@ -6,6 +6,7 @@ pub struct TinQueue<T> {
     vec: Vec<T>,
     capacity: usize,
     index: usize,
+    last_index: usize
 }
 
 pub type TinIter<'a, T> = Chain<SliceIter<'a, T>, SliceIter<'a, T>>;
@@ -18,6 +19,7 @@ impl<T> TinQueue<T> {
             vec: Vec::with_capacity(size),
             capacity: size,
             index: 0,
+            last_index: 0
         }
     }
 
@@ -57,6 +59,25 @@ impl<T> TinQueue<T> {
         }
         // Update the index
         self.index = (self.index + 1) % self.get_capacity();
+    }
+
+    // Pop an item from the queue
+    pub fn pop(&mut self) -> Option<T> {
+        if self.vec.len() > 0 {
+            self.vec.reverse();
+            if let Some(element) = self.vec.pop() {
+                self.vec.reverse();
+                return Some(element);
+            }
+            self.vec.reverse();
+            return None;
+        }
+        None
+    }
+
+    // Peek an item from the queue
+    pub fn peek(&self) -> Option<&T> {
+        self.vec.first()
     }
 
     // Iter through the queue content and return the iterator

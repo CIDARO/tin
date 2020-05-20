@@ -36,6 +36,8 @@ fn main() {
                             routes::create_queue, 
                             routes::delete_queue,
                             routes::push_to_queue,
+                            routes::pop_from_queue,
+                            routes::peek_from_queue,
                             routes::clear_queue])
         .launch();
 }

@@ -39,6 +39,8 @@ It exposes a simple HTTP API made with **Rocket** where all the actions are sent
 - `GET /queues/<queue_name>` to retrieve information about the queue with the input name;
 - `DELETE /queues/<queue_name>` to delete the queue with the input name;
 - `POST /queues/<queue_name>/create` to create a new queue with the input name;
+- `GET /queues/<queue_name>/pop` to pop an item from the queue;
+- `GET /queues/<queue_name>/peek` to peek the first item from the queue;
 - `POST /queues/<queue_name>/push` with the following body `{"value": "VALUE"}` to push the VALUE into the queue;
 - `POST /queues/<queue_name>/clear` to clear all the content inside the queue with the given name.
 

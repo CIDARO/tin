@@ -171,6 +171,53 @@ pub fn push_to_queue(queue_name: String, body: Json<QueueElement>, queue_manager
     }
 }
 
+#[get("/queues/<queue_name>/pop")]
+pub fn pop_from_queue(queue_name: String, queue_manager: State<TinQueueManager>) -> ApiResponse {
+    if let Some(queue) = queue_manager.get_queue(queue_name.clone()) {
+        let mut updated_queue = queue;
+        if let Some(element) = updated_queue.pop() {
+            ApiResponse {
+                result: json!({"result": element}),
+                status: Status::Ok,
+            }
+        } else {
+            ApiResponse {
+                result: json!({"result": "Element not found."}),
+                status: Status::InternalServerError
+            }
+        }
+    } else {
+        ApiResponse {
+            result: json!({"result": "Queue not found."}),
+            status: Status::InternalServerError
+        }
+    }
+}
+
+#[get("/queues/<queue_name>/peek")]
+pub fn peek_from_queue(queue_name: String, queue_manager: State<TinQueueManager>) -> ApiResponse {
+    if let Some(queue) = queue_manager.get_queue(queue_name.clone()) {
+        let updated_queue = queue;
+        if let Some(element) = updated_queue.peek() {
+            ApiResponse {
+                result: json!({"result": element}),
+                status: Status::Ok,
+            }
+        } else {
+            ApiResponse {
+                result: json!({"result": "Element not found."}),
+                status: Status::InternalServerError
+            }
+        }
+    } else {
+        ApiResponse {
+            result: json!({"result": "Queue not found."}),
+            status: Status::InternalServerError
+        }
+    }
+}
+
+
 #[post("/queues/<queue_name>/clear")]
 pub fn clear_queue(queue_name: String, queue_manager: State<TinQueueManager>) -> ApiResponse {
     if let Some(queue) = queue_manager.get_queue(queue_name.clone()) {
