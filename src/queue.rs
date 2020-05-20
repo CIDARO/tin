@@ -6,7 +6,6 @@ pub struct TinQueue<T> {
     vec: Vec<T>,
     capacity: usize,
     index: usize,
-    last_index: usize
 }
 
 pub type TinIter<'a, T> = Chain<SliceIter<'a, T>, SliceIter<'a, T>>;
@@ -19,7 +18,6 @@ impl<T> TinQueue<T> {
             vec: Vec::with_capacity(size),
             capacity: size,
             index: 0,
-            last_index: 0
         }
     }
 
