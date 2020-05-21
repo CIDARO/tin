@@ -65,7 +65,7 @@ impl<T> TinQueue<T> {
         None
     }
 
-    // Peek an item from the queue
+    // Peek an item from the queue 
     pub fn peek(&self) -> Option<&T> {
         self.vec.first()
     }
