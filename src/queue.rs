@@ -60,13 +60,17 @@ impl<T> TinQueue<T> {
     }
 
     // Pop an item from the queue
+    // TODO change the current pop implementation because now it sucks
     pub fn pop(&mut self) -> Option<T> {
         if self.vec.len() > 0 {
+            // bad
             self.vec.reverse();
             if let Some(element) = self.vec.pop() {
+                // bad
                 self.vec.reverse();
                 return Some(element);
             }
+            // bad
             self.vec.reverse();
             return None;
         }
