@@ -9,9 +9,7 @@
   <p>
     version 0.1.0-alpha
   </p>
-  <p>
-    ![Rust](https://github.com/CIDARO/tin/workflows/Rust/badge.svg)
-  </p>
+  ![Rust](https://github.com/CIDARO/tin/workflows/Rust/badge.svg)
   <br/>
   <p>
     <a href="#status"><strong>Status</strong></a> ·
