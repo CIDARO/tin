@@ -13,6 +13,9 @@
     <a href="https://github.com/CIDARO/tin/workflows/Rust">
       <img src="https://github.com/CIDARO/tin/workflows/Rust/badge.svg" />
     </a>
+    <a href="https://api.dependabot.com/badges/status?host=github&repo=CIDARO/tin">
+      <img src="https://api.dependabot.com/badges/status?host=github&repo=CIDARO/tin">
+    </a>
   </p>
   <br/>
   <p>
