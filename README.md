@@ -15,6 +15,7 @@
     <a href="#description"><strong>Description</strong></a> ·
     <a href="#features"><strong>Features</strong></a> ·
     <a href="#install"><strong>Install</strong></a> ·
+    <a href="#examples"><strong>Examples</strong></a> ·
     <a href="#contributing"><strong>Contributing</strong></a>
   </p>
 </div>
@@ -65,6 +66,146 @@ It exposes a simple HTTP API made with **Rocket** where all the actions are sent
 ### Docker
 
 Work in progress.
+
+---
+
+## Examples
+
+In order to locally test the functioning of Tin, start your local instance by running in the home folder:
+
+```
+cargo run
+```
+
+You can specify an environment by using the ROCKET_ENV variable:
+
+```
+ROCKET_ENV=staging cargo run
+```
+
+### Set value in store
+
+Run the following command to set a value for the given key:
+
+```
+curl -XPOST http://localhost:8000/store/set/<KEY> --header "Content-Type: application/json" -d '{"value": <VALUE>, "expiration": 0}'
+```
+
+In case of error, the response that will be prompted is as follows:
+
+`{"result":"Error while inserting key/value pair."}`
+
+Otherwise, you receive a more generic:
+
+`{"result":"Success."}`
+
+### Set expiring value in store
+
+Run the following command to set an expiring value for the given key:
+
+```
+curl -XPOST http://localhost:8000/store/setexp/<KEY> --header "Content-Type: application/json" -d '{"value": <VALUE>, "expiration": 0}'
+```
+
+In case of error, the response that will be prompted is as follows:
+
+`{"result":"Error while inserting key/value pair."}`
+
+Otherwise, you receive a more generic:
+
+`{"result":"Success."}`
+
+
+### Get value from store
+
+Run the following command to retrieve a value from the store using a key:
+
+```
+curl http://localhost:8000/store/get/<KEY>
+```
+
+An example of response could be:
+
+```
+{"result":{"creation":"2020-05-21T08:46:29.773314Z","data":"test_set","expiration":null,"locked":false,"update":"2020-05-21T08:46:31.350222Z"}}
+// creation: when the key/value pair has been inserted
+// data: the last value set
+// expiration: when the key/value pair will expire
+// locked: whether the value is locked (during clearing) or not
+// update: when the key/value pair has been updated
+```
+
+In case the key does not exist, the response body is the following one:
+
+`{"result":"Key not found."}`
+
+### Delete key from store
+
+Run the following command to delete a key from the store:
+
+```
+curl -XDELETE http://localhost:8000/store/delete/abc
+```
+
+In case of error, the response that will be prompted is as follows:
+
+`{"result":"Error while inserting key/value pair."}`
+
+Otherwise, you receive a more generic:
+
+`{"result":"Success."}`
+
+
+### Create new queue
+
+Run the following command to create a new queue:
+
+```
+curl -XPOST http://localhost:8000/queues/<QUEUE_NAME>/create
+```
+
+### Retrieve queue information
+
+Run the following command to retrieve a queue information:
+
+```
+curl http://localhost:8000/queues/<QUEUE_NAME>
+```
+
+The result will be given in the following JSON format:
+
+```
+{"result":{"capacity":64,"empty":false,"len":2,"name":"test"}}
+
+// capacity: represent the maximum queue capacity before it starts overriding values
+// empty: whether the queue is empty or not
+// len: current number of items in the queue
+// name: queue name
+```
+
+### Push a value into the queue
+
+Run the following command to push a value into the queue:
+
+```
+curl -XPOST http://localhost:8000/queues/<QUEUE_NAME>/push --header "Content-Type: application/json" -d '{"value": "test"}'
+```
+
+### Peek a value from the queue
+
+Run the following command to peek a value from the queue:
+
+```
+curl http://localhost:8000/queues/<QUEUE_NAME>/peek
+```
+
+### Pop a value from the queue
+
+[*WIP*] Run the following command to pop a value from the queue:
+
+```
+curl http://localhost:8000/queues/test/pop
+```
 
 ---
 
