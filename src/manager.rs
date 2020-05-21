@@ -15,9 +15,14 @@ impl TinQueueManager {
     }
 
     // Add new Tin Queue to the map
-    pub fn add_queue(&self, queue_name: String, size: usize) -> Option<TinQueue<String>> {
-        let queue = TinQueue::new(size);
-        self.map.insert(queue_name, queue)
+    pub fn add_queue(&self, queue_name: String, size: usize) -> bool {
+        if let Some(_) = self.map.get(&queue_name) {
+            return false;
+        } else {
+            let queue = TinQueue::new(size);
+            self.map.insert_new(queue_name, queue);
+            true
+        }
     }
 
     // Get Tin Queue from the manager

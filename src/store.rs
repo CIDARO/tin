@@ -27,7 +27,7 @@ impl TinStore {
         }
     }
 
-    pub fn set(&self, key: String, value: String) -> Option<TinElement> {
+    pub fn set(&self, key: String, value: String) -> bool {
         match &mut self.map.get_mut(&key) {
             Some(tin_element) => {
                 if !tin_element.locked {
@@ -38,8 +38,9 @@ impl TinStore {
                         tin_element.data = value;
                     }
                     tin_element.update = Utc::now();
+                    return true;
                 }
-                return Some(tin_element.to_owned())
+                return false;
             }
             None => {
                 let tin_element = TinElement {
@@ -49,12 +50,13 @@ impl TinStore {
                     expiration: None,
                     locked: false
                 };
-                return self.map.insert(key, tin_element);
+                self.map.insert_new(key, tin_element);
+                true
             }
         }
     }
 
-    pub fn set_exp(&self, key: String, value: String, seconds: i64) -> Option<TinElement> {
+    pub fn set_exp(&self, key: String, value: String, seconds: i64) -> bool {
         match &mut self.map.get_mut(&key) {
             Some(tin_element) => {
                 if !tin_element.locked {
@@ -64,9 +66,11 @@ impl TinStore {
                     } else {
                         tin_element.data = value;
                     }
+                    tin_element.expiration = Some(Utc::now() + Duration::seconds(seconds));
                     tin_element.update = Utc::now();
+                    return true;
                 }
-                return Some(tin_element.to_owned())
+                return false;
             }
             None => {
                 let tin_element = TinElement {
@@ -76,7 +80,8 @@ impl TinStore {
                     expiration: Some(Utc::now() + Duration::seconds(seconds)),
                     locked: false
                 };
-                return self.map.insert(key, tin_element);
+                self.map.insert_new(key, tin_element);
+                true
             }
         }
     }

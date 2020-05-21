@@ -63,7 +63,7 @@ pub fn get(key: String, store: State<TinStore>) -> ApiResponse {
 
 #[post("/store/set/<key>", format = "application/json", data = "<body>")]
 pub fn set(key: String, body: Json<Element>, store: State<TinStore>) -> ApiResponse {
-    if let Some(_) = store.set(key, body.value.clone()) {
+    if store.set(key, body.value.clone()) {
         ApiResponse {
             result: json!({"result": "Success."}),
             status: Status::Ok,
@@ -78,7 +78,7 @@ pub fn set(key: String, body: Json<Element>, store: State<TinStore>) -> ApiRespo
 
 #[post("/store/setexp/<key>", format = "application/json", data = "<body>")]
 pub fn set_exp(key: String, body: Json<Element>, store: State<TinStore>) -> ApiResponse {
-    if let Some(_) = store.set_exp(key, body.value.clone(), body.expiration.clone()) {
+    if store.set_exp(key, body.value.clone(), body.expiration.clone()) {
         ApiResponse {
             result: json!({"result": "Success."}),
             status: Status::Ok,
@@ -140,7 +140,8 @@ pub fn delete_queue(queue_name: String, queue_manager: State<TinQueueManager>) -
 
 #[post("/queues/<queue_name>/create")]
 pub fn create_queue(queue_name: String, queue_manager: State<TinQueueManager>) -> ApiResponse {
-    if let Some(_) = queue_manager.add_queue(queue_name, 64) {
+    // TODO capacity must be set by user or by config? dilemma.
+    if queue_manager.add_queue(queue_name, 64) {
         ApiResponse {
             result: json!({"result": "Success."}),
             status: Status::Ok,
