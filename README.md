@@ -16,6 +16,7 @@
     <a href="#features"><strong>Features</strong></a> ·
     <a href="#install"><strong>Install</strong></a> ·
     <a href="#examples"><strong>Examples</strong></a> ·
+    <a href="#benchmarking"><strong>Benchmarking</strong></a> ·
     <a href="#contributing"><strong>Contributing</strong></a>
   </p>
 </div>
@@ -205,6 +206,139 @@ curl http://localhost:8000/queues/<QUEUE_NAME>/peek
 
 ```
 curl http://localhost:8000/queues/test/pop
+```
+
+---
+
+## Benchmarking
+
+**NOTE**: all the benchmarking shown here **must not** be taken in serious consideration, since it's really just numbers thrown there that have a lot of variance. Soon we want to set up some proper benches for the database and the queues.
+
+The following benchmarks didn't run on a specialized server or whatever, just on our local personal computer.
+
+The tool used for the benchmarks is **Apache Bench version 2.3**. We're considering tools like **wrk** to do the benches.
+
+### Benchmark set key
+
+The test.json file contains the following object: `{"value": "test", "expiration": 0}`.
+
+```
+➜  ~ ab -p test.json -T application/json -c 10 -n 10000 -s 30 http://localhost:8000/store/set/test
+This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:        Rocket
+Server Hostname:        localhost
+Server Port:            8000
+
+Document Path:          /store/set/test
+Document Length:        21 bytes
+
+Concurrency Level:      10
+Time taken for tests:   4.656 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      1640000 bytes
+Total body sent:        1840000
+HTML transferred:       210000 bytes
+Requests per second:    2147.95 [#/sec] (mean)
+Time per request:       4.656 [ms] (mean)
+Time per request:       0.466 [ms] (mean, across all concurrent requests)
+Transfer rate:          344.01 [Kbytes/sec] received
+                        385.96 kb/s sent
+                        729.97 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.4      0      29
+Processing:     1    4   7.2      3     194
+Waiting:        0    4   6.4      2     194
+Total:          1    5   7.2      3     194
+
+Percentage of the requests served within a certain time (ms)
+  50%      3
+  66%      4
+  75%      5
+  80%      6
+  90%      8
+  95%     10
+  98%     14
+  99%     18
+ 100%    194 (longest request)
+```
+
+### Benchmark get key
+
+```
+➜  ~ ab -c 10 -n 10000 -s 30 http://localhost:8000/store/get/test
+This is ApacheBench, Version 2.3 <$Revision: 1843412 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:        Rocket
+Server Hostname:        localhost
+Server Port:            8000
+
+Document Path:          /store/get/test
+Document Length:        139 bytes
+
+Concurrency Level:      10
+Time taken for tests:   3.999 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      2830000 bytes
+HTML transferred:       1390000 bytes
+Requests per second:    2500.76 [#/sec] (mean)
+Time per request:       3.999 [ms] (mean)
+Time per request:       0.400 [ms] (mean, across all concurrent requests)
+Transfer rate:          691.13 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.2      0       3
+Processing:     1    4   2.8      3      44
+Waiting:        0    3   2.4      2      40
+Total:          1    4   2.8      3      44
+
+Percentage of the requests served within a certain time (ms)
+  50%      3
+  66%      4
+  75%      5
+  80%      5
+  90%      7
+  95%      9
+  98%     11
+  99%     13
+ 100%     44 (longest request)
 ```
 
 ---
